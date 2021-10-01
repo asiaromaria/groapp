@@ -1,45 +1,46 @@
-import React, { Component } from 'react';
-
-
-class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: ''};
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-      }
-    
-      handleChange(event) {
-        this.setState({value: event.target.value});
-      }
-    
-      handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-        console.log(this.handleSubmit);
-      }
-    render() { 
-        return (  
-            <div>
-                Login into your account:
-            
-            <form>
-            <label>
-              Email:
-              <input type="text" name="email" />
-            </label>
-            <label>
-              Password:
-              <input type="text" name="password" />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-          </div>
-        );
-    }
+import React, { useState } from 'react';
+ 
+function Login(props) {
+  const username = useFormInput('');
+  const password = useFormInput('');
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+ 
+  // handle button click of login form
+  const handleLogin = () => {
+    props.history.push('/dashboard');
+  }
+ 
+  return (
+    <div>
+      Login<br /><br />
+      <div>
+        Username<br />
+        <input type="text" {...username} autoComplete="new-password" />
+      </div>
+      <div style={{ marginTop: 10 }}>
+        Password<br />
+        <input type="password" {...password} autoComplete="new-password" />
+      </div>
+      {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
+      <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />
+    </div>
+  );
+}
+ 
+const useFormInput = initialValue => {
+  const [value, setValue] = useState(initialValue);
+ 
+  const handleChange = e => {
+    setValue(e.target.value);
+  }
+  return {
+    value,
+    onChange: handleChange
+  }
 }
  
 export default Login;
+ 
 
 

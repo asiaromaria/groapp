@@ -19,8 +19,8 @@ const Register = () => {
         try {
             let response = await axios.post("http://localhost:2000/api/accounts/", data);
             localStorage.setItem("token", response.headers["x-auth-token"]);
-            // window.location = "/";
             console.log(response);
+            window.location = "/";
         } catch (error) {
             console.log(error);
         }

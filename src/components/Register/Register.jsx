@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -9,22 +10,26 @@ const Register = () => {
     const [ssn, setSsn] = useState("");
 
     const handleSubmit = async () => {
-        let data = {
+        await axios.post('http://localhost:2000/api/accounts',{
             name: name,
             email: email,
             password: password,
             dob: dob,
             ssn: ssn,
-        };
-        try {
-            let response = await axios.post("http://localhost:2000/api/accounts/", data);
-            localStorage.setItem("token", response.headers["x-auth-token"]);
-            console.log(response);
-            window.location = "/";
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        })
+        .then((res) => {
+            console.log(res)
+            window.location = '/dashboard';
+        })
+        .catch(error => console.log(error))
+    }
+
+    const history = useHistory();
+
+    const routeChange = () =>{ 
+        let path = "/dashboard"; 
+        history.push(path);
+      }
 
     return ( 
         
@@ -74,7 +79,8 @@ const Register = () => {
                     onChange={(e) => setSsn(e.target.value)}
                     />
             </label>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" onClick={routeChange}/>
+            
         </form>
      );
 }

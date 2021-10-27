@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 
-const Register = () => {
-    const [name, setName] = useState("");
+
+
+const Register = ( {user, setUser, name, setName} ) => { 
+    // const [user, setUser] = useState({})
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState("");
@@ -11,27 +13,24 @@ const Register = () => {
 
     const handleSubmit = async () => {
         await axios.post('http://localhost:2000/api/accounts',{
-            name: name,
+            name: user.name,
             email: email,
             password: password,
             dob: dob,
             ssn: ssn,
         })
         .then((res) => {
-            console.log(res)
+            setUser(res);
+            console.log(res);
             window.location = '/dashboard';
         })
         .catch(error => console.log(error))
     }
 
-    const history = useHistory();
-
-    const routeChange = () =>{ 
-        let path = "/dashboard"; 
-        history.push(path);
-      }
 
     return ( 
+        <div>
+
         
         <form onSubmit={handleSubmit}>
             <label>
@@ -39,7 +38,7 @@ const Register = () => {
                 <input
                     type="text"
                     name="name"
-                    value={name}
+                    value={user.name}
                     onChange={(e) => setName(e.target.value)}
                     />
             </label>
@@ -79,11 +78,13 @@ const Register = () => {
                     onChange={(e) => setSsn(e.target.value)}
                     />
             </label>
-            <input type="submit" value="Submit" onClick={routeChange}/>
+            <input type="submit" value="Submit" />
             
         </form>
+        </div>
      );
 }
+
  
 export default Register;
 

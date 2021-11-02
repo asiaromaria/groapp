@@ -16,19 +16,15 @@ const Login = () => {
     };
 
     const loginUser = async () => {
-      // const data = {
-      //   email: email,
-      //   password: password
-      // }
-        await axios.post('http://localhost:2000/api/auth', {
-          email: email,
-          password: password,
-
-        })
+      
+      await axios.post('http://localhost:2000/api/auth', {
+        email: email,
+        password: password
+      })
         .then((res) => {
-            setUser(res)
-            console.log( "hello user", user )
-            localStorage.setItem('token', res.token);
+          setUser(res)
+            console.log(res.data, user)
+            localStorage.setItem('token', res.data);
             window.location = '/dashboard';
         })
         .catch(error => console.log(error))

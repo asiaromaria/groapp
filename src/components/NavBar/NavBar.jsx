@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
-const NavBar = ({ user, logoutUser }) => {
+const NavBar = ({ user }) => {
+    const [email,setEmail]= useState("");
+    const [password,setPassword]= useState("");
 
+    const logoutUser = async () => {
+  
+        await axios.delete('http://localhost:2000/api/accounts/:userId')
+        .then((res) => {
+            // setUser(res)
+            console.log( "user has been logged out.") 
+            localStorage.clear('token', res.data);
+            window.location.href = '/savings';
+        })
+        .catch(error => console.log(error))
+    }
 
 
   return (
@@ -11,7 +24,7 @@ const NavBar = ({ user, logoutUser }) => {
       {user ? (
         <ul>
           {/* <h4>Welcome {user.username}</h4> */}
-          <h4>Welcome {user.name}</h4>
+          <h4>Welcome! {user.name}</h4>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -28,7 +41,7 @@ const NavBar = ({ user, logoutUser }) => {
             <Link to="/resources">Resources</Link>
           </li>
           <li>
-            <Link to="/" onSubmit={logoutUser}>Logout</Link>
+            <Link to="/register" onClick={() => logoutUser()}>Logout</Link>
           </li>
         </ul>
       ) : (

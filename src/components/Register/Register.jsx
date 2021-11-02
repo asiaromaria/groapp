@@ -10,10 +10,11 @@ const Register = ( {user, setUser, name, setName} ) => {
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState("");
     const [ssn, setSsn] = useState("");
+    const [name, setName] = useState("");
 
     const handleSubmit = async () => {
         await axios.post('http://localhost:2000/api/accounts',{
-            name: user.name,
+            name: name,
             email: email,
             password: password,
             dob: dob,
@@ -21,7 +22,7 @@ const Register = ( {user, setUser, name, setName} ) => {
         })
         .then((res) => {
             setUser(res);
-            console.log(res);
+            console.log(res, user);
             window.location = '/dashboard';
         })
         .catch(error => console.log(error))
@@ -38,7 +39,7 @@ const Register = ( {user, setUser, name, setName} ) => {
                 <input
                     type="text"
                     name="name"
-                    value={user.name}
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                     />
             </label>

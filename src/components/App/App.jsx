@@ -29,30 +29,28 @@ function App () {
     
     
     const loginUser = async () => {
-      const data = {
+      
+      await axios.post('http://localhost:2000/api/auth', {
         email: email,
         password: password
-      }
-      await axios.post('http://localhost:2000/api/auth', data)
+      })
         .then((res) => {
-            console.log( data)
-            localStorage.setItem('token', res.token);
+          setUser(res)
+            console.log(res.data)
+            localStorage.setItem('token', res.data);
             window.location = '/dashboard';
         })
         .catch(error => console.log(error))
     }
 
     const logoutUser = async () => {
-      // const data = {
-      //   email: email,
-      //   password: password
-      // }
-        await axios.delete('http://localhost:2000/api/accounts/')
+  
+        await axios.delete('http://localhost:2000/api/accounts/:userId', jwtDecode)
         .then((res) => {
             // setUser(res)
             console.log( "user has been logged out.") 
-            localStorage.clear('token', res.token);
-            window.location.href = '/home';
+            localStorage.clear('token', res.data);
+            window.location.href = '/savings';
         })
         .catch(error => console.log(error))
     }
@@ -79,7 +77,7 @@ function App () {
               <Route path="/register" component={Register} name={name} setName={setName} />
               <Route path="/savings" component={Savings}/>
               {/* <Route path="/credithistory" component={CreditHistory}/> */}
-              <Route path="/dashboard" component={Dashboard} user={user.name}/>
+              <Route path="/dashboard" component={Dashboard} user={user}/>
               <Route path="/login" component={Login} user={user} loginUser={loginUser} email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
               
             </Switch>

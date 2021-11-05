@@ -7,15 +7,9 @@ const NavBar = ({ user }) => {
     const [password,setPassword]= useState("");
 
     const logoutUser = async () => {
-  
-        await axios.delete('http://localhost:2000/api/accounts/:userId')
-        .then((res) => {
-            // setUser(res)
-            console.log( "user has been logged out.") 
-            localStorage.clear('token', res.data);
-            window.location.href = '/savings';
-        })
-        .catch(error => console.log(error))
+        console.log(localStorage.getItem("token"))
+        localStorage.removeItem("token")
+        console.log(localStorage.getItem("token"))
     }
 
 
@@ -24,7 +18,7 @@ const NavBar = ({ user }) => {
       {user ? (
         <ul>
           {/* <h4>Welcome {user.username}</h4> */}
-          <h4>Welcome! {user.name}</h4>
+          <h4>Welcome {user.name}!</h4>
           <li>
             <Link to="/">Home</Link>
           </li>

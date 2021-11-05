@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-do
 
 
 
-const Register = ( {user, setUser, name, setName} ) => { 
+const Register = ( {user, setUser} ) => { 
     // const [user, setUser] = useState({})
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

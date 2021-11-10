@@ -13,6 +13,7 @@ import NavBar from '../NavBar/NavBar';
 import Login from '../Login/Login';
 import axios from 'axios';
 import Home from '../Home/PreLogin';
+import Profile from '../Profile/Profile';
 
 
 
@@ -70,11 +71,12 @@ function App () {
     return (
       <Router>
 
-        <NavBar user={user} {...logoutUser}/>
+        <NavBar user={user} />
        
             <Switch>
-              <Route path="home" component={Home} />
-              <Route path="/register" component={Register} name={name} setName={setName} />
+              <Route path="/home" component={Home} />
+              <Route path="/profile" component={Profile} user={user} setUser={setUser} name={name} setName={setName}  />
+              <Route path="/register" component={Register} user={user} setUser={setUser} name={name} setName={setName} />
               <Route path="/savings" component={Savings}/>
               {/* <Route path="/credithistory" component={CreditHistory}/> */}
               <Route path="/dashboard" component={Dashboard} user={user}/>

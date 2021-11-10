@@ -21,7 +21,7 @@ const Login = () => {
         email: email,
         password: password
       })
-      console.log(localStorage.getItem("token"))
+      // console.log(localStorage.getItem("token"))
         .then((res) => {
           setUser(res)
             console.log(res.data, user)

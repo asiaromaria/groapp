@@ -9,21 +9,33 @@ const Register = ( {user, setUser} ) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState("");
-    const [ssn, setSsn] = useState("");
     const [name, setName] = useState("");
 
     const handleSubmit = async () => {
-        await axios.post('http://localhost:2000/api/accounts',{
+        await axios.post('http://localhost:2000/api/accounts', {
             name: name,
             email: email,
             password: password,
             dob: dob,
-            ssn: ssn,
+            // paymentsToGro: paymentsToGro,
+            // creditScoreHistory: creditScoreHistory,
+            // paymentHistory: paymentHistory,
+            // accountsOwed: accountsOwed,
+            // lengthOfCredit: lengthOfCredit,
+            // creditCards: creditCards,
+            // loans: loans,
+            // retailCards: retailCards,
+            // mortgageLoans: mortgageLoans,
+            // recentCreditLines: recentCreditLines,
+
         })
+        
         .then((res) => {
-            setUser(res);
-            console.log(res, user);
+          setUser(res)
+            console.log(res.data, user)
+            localStorage.setItem('token', res.data);
             window.location = '/dashboard';
+            console.log(localStorage.getItem("token"))
         })
         .catch(error => console.log(error))
     }
@@ -33,14 +45,15 @@ const Register = ( {user, setUser} ) => {
         <div>
 
         
-        <form onSubmit={handleSubmit}>
+        <form onClick={() => handleSubmit()}>
             <label>
                 Full Name:
                 <input
                     type="text"
                     name="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    // onChange={(e) => setName(e.target.value)}
+                    onClick={() => handleSubmit()}
                     />
             </label>
             <label>
@@ -50,6 +63,7 @@ const Register = ( {user, setUser} ) => {
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onClick={() => handleSubmit()}
                     />
             </label>
             <label>
@@ -59,6 +73,7 @@ const Register = ( {user, setUser} ) => {
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onClick={() => handleSubmit()}
                     />
             </label>
             <label>
@@ -68,19 +83,11 @@ const Register = ( {user, setUser} ) => {
                     name="dob"
                     value={dob}
                     onChange={(e) => setDob(e.target.value)}
+                    onClick={() => handleSubmit()}
                     />
-            </label>
-            <label>
-                SSN:
-                <input
-                    type="text"
-                    name="ssn"
-                    value={ssn}
-                    onChange={(e) => setSsn(e.target.value)}
-                    />
-            </label>
+            </label> 
             <input type="submit" value="Submit" />
-            
+            <button onClick={() => handleSubmit()}>Login </button>
         </form>
         </div>
      );
